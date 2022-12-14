@@ -1,7 +1,7 @@
 classdef analysis_ < Analysis.neurodata
     % The subclass analysis. This is script is part of the analysis for the odor training in older adults project.
     % 
-    %     Behzad Iravani
+    %     Author: Behzad Iravani
     %     behzadiravani@gmail.com
     % 
     % This class is dependent on the following toolboxes:
@@ -34,13 +34,20 @@ classdef analysis_ < Analysis.neurodata
                     case 'vbm'
                         % call vbm object
                         disp('Constructing VBM object')
-                        answer = input('Applying DARTEL segmentation, [y/n]? ','s');
-                        if strcmp(answer,'y')
-                            obj.analysis.method.vbm = Analysis.VBM(obj.Data, obj.BidsPath, obj.analysis, true);
+                        answer_seg = input('Applying  segmentation, [y/n]? ','s');
+                        answer_DRTL = input('Applying  DARTEL normalization, [y/n]? ','s');
+                        if strcmp(answer_seg,'y') && strcmp(answer_DRTL, 'y')
+                            obj.analysis.method.vbm = Analysis.VBM(obj.Data, obj.BidsPath, obj.analysis, true, true);   
+                        elseif strcmp(answer_seg,'n') && strcmp(answer_DRTL, 'y')
+                            obj.analysis.method.vbm = Analysis.VBM(obj.Data, obj.BidsPath, obj.analysis, false, true);
+                        elseif strcmp(answer_seg,'y') && strcmp(answer_DRTL, 'n')
+                            obj.analysis.method.vbm = Analysis.VBM(obj.Data, obj.BidsPath, obj.analysis, true, false);
                         else
-                            obj.analysis.method.vbm = Analysis.VBM();
+                            obj.analysis.method.vbm = Analysis.VBM(obj.Data, obj.BidsPath, obj.analysis, false, false);
                         end
-                        % performing preproc analysis
+                        
+                        % performing preproc analysis  
+                        % obj.analysis.method.vbm = Analysis.VBM();
 
                     case 'rest'
 
@@ -49,6 +56,9 @@ classdef analysis_ < Analysis.neurodata
             end % end if nargin
         end % end JobConstructor method
     end % end methods
+    methods (Static)
+        
+    end
 end % end classs
 
 
