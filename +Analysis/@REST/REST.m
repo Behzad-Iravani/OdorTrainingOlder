@@ -32,7 +32,7 @@ classdef REST < Analysis.analysis_
                 r.BidsPath        = BidsPath;
                 r.analysis.name   = analysis(1).name;
                 r.analysis.method = analysis(1).method;
-                r.realignement    = realignment;
+                r.realignment     = realignment;
                 r.movement        = movement;
                 r.slice_time_corr = slice_time_corr;
                 r.coregisteration = coregisteration;
@@ -42,9 +42,17 @@ classdef REST < Analysis.analysis_
         %%------------RUN REST preproc -----------%%
         function obj = run(obj)
             if obj.realignment
-
-
+                disp('Realignment...')
+                if isprop(obj.Data, 'rest') % check if the properties T1 exists
+                    % Create & run segmentation batch
+                    subjects = obj.Data.rest;
+                    run_realignment(subjects,...
+                    obj.Realignmenttemplate);
+                else
+                    error('No EPI found! Make sure the data set is correct Dataset\subjs\func\*rest*.nii')
+                end % end if rest 
             end % end realignment
+
             if obj.movement
 
 
@@ -64,8 +72,25 @@ classdef REST < Analysis.analysis_
         %%-------------*********************-------------%%
         %%---------------------BATCH---------------------%%
         %%-------------*********************-------------%%
+        
         %%--------- Realignment Matlab Batch ------------%%
+        function matlabbatch = get.Realignmenttemplate(obj)
 
+        end
+
+        %%------ Slice time correction Matlab Batch -----%%
+        function matlabbatch = get.slice_time_corrtemplate(obj)
+
+        end
+
+        %%--------- Coregisteration Matlab Batch --------%%
+        function matlabbatch = get.coregisterationtemplate(obj)
+
+        end
+        %%--------- Normalization Matlab Batch --------%%
+        function matlabbatch = get.normalizationtemplate(obj)
+
+        end
 
     end % end methods
 

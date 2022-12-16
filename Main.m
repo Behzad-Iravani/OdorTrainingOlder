@@ -23,7 +23,7 @@ DATA = Analysis.neurodata('Dataset');
 analysis.name{1} = 'vbm'; % the voxel vised T1 analysis
 analysis.method.vbm = Analysis.VBM.empty(); % placeholder for VBM method
 analysis.name{2} = 'rest'; % Functional connectivity analysis of fMRI 
-% analysis.method.rest = Analysis.rest.empty(); % placeholder for VBM method
+analysis.method.rest = Analysis.REST.empty(); % placeholder for REST method
 % Analysis object
 ANALYSIS = Analysis.analysis_(DATA, analysis);
 %% Running jobs

@@ -12,14 +12,13 @@ function run_realignment(path2EPI,Batch)
 
 %%----------------------------------------------------------%%
 
-EPI = spm_select('List',strcat(path2EPI,filesep),'.*\.nii$'); % select EPI scans using spm_select function 
+EPI = spm_select('List', strcat(path2EPI,filesep),'.*\.nii$'); % select EPI scans using spm_select function
 
-if isempty(EPI) % make sure that scans exist 
-   error(sprintf('No scans found for %s', path2EPI))
+if isempty(EPI) % make sure that scans exist
+    error(sprintf('No scans found for %s', path2EPI))
 end
 
-cd (path2EPI)
-matlabbatch{1}.spm.spatial.realign.estwrite.data{1} = cellstr(EPI);
+Batch{1}.spm.spatial.realign.estwrite.data{1} = cellstr(EPI);
 spm_jobman('run',matlabbatch)
 end
 

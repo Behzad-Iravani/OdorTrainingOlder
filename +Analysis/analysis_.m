@@ -34,6 +34,7 @@ classdef analysis_ < Analysis.neurodata
                 switch job
                     case 'vbm'
                         % call vbm object
+                        % setup preproc analysis for VBM
                         disp('Constructing VBM object')
                         answer_seg = input('Applying  segmentation, [y/n]? ','s');
                         answer_DRTL = input('Applying  DARTEL normalization, [y/n]? ','s');
@@ -46,12 +47,28 @@ classdef analysis_ < Analysis.neurodata
                         else
                             obj.analysis.method.vbm = Analysis.VBM(obj.Data, obj.BidsPath, obj.analysis, false, false);
                         end
-                        
-                        % performing preproc analysis  
-                        % obj.analysis.method.vbm = Analysis.VBM();
-
+ 
                     case 'rest'
+                        % call rest object
+                        % setup preproc analysis for REST
+                        disp('Constructing REST object')
+                        answer_realign = input('Applying  realignment, [y/n]? ','s');
+                        answer_motion = input('Applying  motion correction, [y/n]? ','s');
+                        answer_slicetc = input('Applying  slice time correction, [y/n]? ','s');
+                        answer_correg = input('Applying  coregistration, [y/n]? ','s');
+                        answer_norm = input('Applying  normalization, [y/n]? ','s');
 
+                        translator = containers.Map({'y', 'n'}, [true , false]); % convert string to boolean
+                        
+                        obj.analysis.method.rest = Analysis.REST(...
+                            obj.Data,...
+                            obj.BidsPath,...
+                            obj.analysis,...
+                            translator(answer_realign),...
+                            translator(answer_motion),...
+                            translator(answer_slicetc),...
+                            translator(answer_correg),...
+                            translator(answer_norm));
                 end
 
             end % end if nargin
