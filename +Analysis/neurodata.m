@@ -1,3 +1,4 @@
+% -*- coding: 'UTF-8' -*-
 classdef neurodata < handle
     % neuro data object
     % the data should be structured as BIDS format 

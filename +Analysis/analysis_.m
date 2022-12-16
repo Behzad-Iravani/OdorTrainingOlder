@@ -1,3 +1,4 @@
+% -*- coding: 'UTF-8' -*-
 classdef analysis_ < Analysis.neurodata
     % The subclass analysis. This is script is part of the analysis for the odor training in older adults project.
     % 

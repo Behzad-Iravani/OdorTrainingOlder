@@ -11,8 +11,8 @@ classdef VBM < Analysis.analysis_
     % Stockholm, june 2019
     % revised december 2022
     properties
-        segmentation(1,1) logical % whether the segmentation performs (true) or not (false)
-        DARTELnorm(1,1) logical % whether the DARTEL normalization performs (true) or not (false)
+        segmentation(1,1) logical % whether the segmentation is performed (true) or not (false)
+        DARTELnorm(1,1) logical % whether the DARTEL normalization is performed (true) or not (false)
     end
     properties(Dependent)
         Segmentationtemplate(1,1) cell
@@ -51,8 +51,13 @@ classdef VBM < Analysis.analysis_
                     obj.DARTELtemplate);
 
             end % end if DARTEL normalization
-           
+            disp('Cleaning up')
+            cleanUP(obj.Data.T1)
+            disp('Done!')
         end % if run method   
+        %%-------------*********************-------------%%
+        %%---------------------BATCH---------------------%%
+        %%-------------*********************-------------%%
         %%--------- Segmentation Matlab Batch --------------
         function matlabbatch = get.Segmentationtemplate(obj)
             disp('Creating segmentation batch template!')
