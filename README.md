@@ -1,5 +1,5 @@
 # OdorTrainingOlder
-The scripts here includes the analysis codes performing the VBM and FC analysis of the project odor training in the older adults. using SPM12 and Brain Connectivity toolbox in the MATLAB enviroment. 
+The scripts here includes the analysis codes performing the VBM and FC analysis of the project odor training in the older adults using SPM12 and Brain Connectivity toolbox in the MATLAB enviroment. 
 
 The package is orgnized in a form of object-oriented programs that generates the batch script for preprocessing as well as post processing of structural and functional MRI scans. 
 Objects defined in this package: 
