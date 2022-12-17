@@ -61,7 +61,7 @@ classdef VBM < Analysis.analysis_
         %%--------- Segmentation Matlab Batch --------------
         function matlabbatch = get.Segmentationtemplate(obj)
             disp('Creating segmentation batch template!')
-                matlabbatch = obj.create_batch_segmentation();
+            matlabbatch = obj.create_batch_segmentation();
             disp('done!')
         end % get Segmentationtemplate 
         %%---------------------------------------------------

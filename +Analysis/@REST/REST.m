@@ -43,7 +43,7 @@ classdef REST < Analysis.analysis_
         function obj = run(obj)
             if obj.realignment
                 disp('Realignment...')
-                if isprop(obj.Data, 'rest') % check if the properties T1 exists
+                if isprop(obj.Data, 'rest') % check if the properties rest exists
                     % Create & run segmentation batch
                     subjects = obj.Data.rest;
                     run_realignment(subjects,...
@@ -75,7 +75,9 @@ classdef REST < Analysis.analysis_
         
         %%--------- Realignment Matlab Batch ------------%%
         function matlabbatch = get.Realignmenttemplate(obj)
-
+            disp('Creating realignment batch template...')
+            matlabbatch = obj.create_batch_realignment();
+            disp('done!')
         end
 
         %%------ Slice time correction Matlab Batch -----%%
