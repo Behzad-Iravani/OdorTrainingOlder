@@ -1,3 +1,4 @@
+
 # OdorTrainingOlder
 The scripts here includes the analysis codes performing the VBM and FC analysis of the project odor training in the older adults using SPM12 and Brain Connectivity toolbox in the MATLAB enviroment. 
 
@@ -17,6 +18,12 @@ Objects defined in this package:
       - REST:       object containing methods for standard fMRI preprocessing and motion correction. 
 
   - Postprocessing
+
+
+### Contacts:
+- [Twitter: Behzad Iravani](https://twitter.com/BehzadIravani)
+- [LinkedIn: Behzad Iravani](https://www.linkedin.com/in/behzadiravani/)
+- Email: behzadiravani@gmail.com
 
 Palo Alto, december 2022
       
