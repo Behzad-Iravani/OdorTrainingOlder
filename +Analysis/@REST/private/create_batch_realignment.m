@@ -1,6 +1,6 @@
 % -*- coding: 'UTF-8' -*-
 % Batch script for realignment
-function create_batch_realignment(~)
+function matlabbatch = create_batch_realignment(~)
 matlabbatch = {};
 
     matlabbatch{1}.spm.spatial.realign.estwrite.data{1} =cell(0,0); %#ok<*SAGROW>

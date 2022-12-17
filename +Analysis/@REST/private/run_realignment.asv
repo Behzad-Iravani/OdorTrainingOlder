@@ -18,7 +18,7 @@ if isempty(EPI) % make sure that scans exist
     error(sprintf('No scans found for %s', path2EPI))
 end
 
-Batch{1}.spm.spatial.realign.estwrite.data{1} = cellstr(EPI);
+Batch{1}.spm.spatial.realign.estwrite.data{:} = fullfile(path2EPI,EPI);
 spm_jobman('run',Batch)
 end
 
