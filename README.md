@@ -5,8 +5,8 @@ The object-oriented programs are orgnized in a form of a package to generate bat
 Objects defined in this package: 
 
 :: neurodata
-  :: analysis_
-    :: VBM
-    :: REST
+:: analysis_
+:: VBM
+:: REST
  
 Palo Alto, december 2022
