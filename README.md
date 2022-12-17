@@ -5,11 +5,7 @@ The package is orgnized in a form of object-oriented programs that generates the
 
 Objects defined in this package: 
 
-```def 
-Steps in red 
-```
-
-
+## Steps
   - Preprocessing
 
       - neurodata: object contianing the path to strcutral and functional scans (should be in BIDS format). 
@@ -23,3 +19,4 @@ Steps in red
   - Postprocessing
 
 Palo Alto, december 2022
+      
