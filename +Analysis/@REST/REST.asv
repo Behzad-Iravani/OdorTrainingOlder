@@ -41,11 +41,11 @@ classdef REST < Analysis.analysis_
         end % end constuctor 
         %%------------RUN REST preproc -----------%%
         function obj = run(obj)
-            subjects = obj.Data.rest;
             if obj.realignment % runing realignment 
                 disp('Realignment...')
                 if isprop(obj.Data, 'rest') % check if the properties rest exists
                     % Create & run segmentation batch
+                    subjects = obj.Data.rest;
                     run_realignment(subjects,...
                     obj.Realignmenttemplate);
                 else
@@ -54,7 +54,7 @@ classdef REST < Analysis.analysis_
             end % end realignment
             %%-------------------------------%%
             if obj.movement % runing the motion correction pipeline 
-                run_motion_correction_piplin(subjects)
+                run_motion_correction_piplin()
 
             end % end movement
             %%-------------------------------%%
