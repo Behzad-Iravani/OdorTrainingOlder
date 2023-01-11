@@ -1,5 +1,5 @@
 % -*- coding: 'UTF-8' -*-
-function matlabbatch = create_batch_coregisteraation()
+function matlabbatch = create_batch_coregisteration(~)
 % Batch script for coregistration 
 % Author:
 % Behzad Iravani 

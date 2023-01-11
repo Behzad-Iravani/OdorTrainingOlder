@@ -67,10 +67,13 @@ classdef REST < Analysis.analysis_
                 else
                     error('No EPI found! Make sure the data set is correct Dataset\subjs\func\*rest*.nii')
                 end % end if rest 
+                disp('done!')
             end % end slice time correction
             %%-------------------------------%%
             if obj.coregisteration
-
+                disp('co-registeration...')
+                run_coregistration(obj.Data.rest, obj.Data.rest, obj.coregisterationtemplate)
+                disp('done!')
             end % end coregisteration
         end % end method run 
         %%-------------*********************-------------%%
@@ -95,7 +98,7 @@ classdef REST < Analysis.analysis_
         %%--------- Coregisteration Matlab Batch --------%%
         function matlabbatch = get.coregisterationtemplate(obj)
             disp('Creating co-registeration batch template...')
-            matlabbatch = obj.create_batch_coregisteration;
+            matlabbatch = obj.create_batch_coregisteration();
             disp('done!')
         end
         %%--------- Normalization Matlab Batch --------%%
