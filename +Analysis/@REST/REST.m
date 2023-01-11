@@ -54,13 +54,19 @@ classdef REST < Analysis.analysis_
             end % end realignment
             %%-------------------------------%%
             if obj.movement % runing the motion correction pipeline 
+                disp('create motion figures...')
                 run_motion_correction_piplin(subjects)
-
+                disp('done!')
             end % end movement
             %%-------------------------------%%
             if obj.slice_time_corr
-
-
+               disp('Slice time correction...')
+               if isprop(obj.Data, 'rest') % check if the properties rest exists
+                    % Create & run segmentation batch
+                    run_slice_time_corr(obj.slice_time_corrtemplate);
+                else
+                    error('No EPI found! Make sure the data set is correct Dataset\subjs\func\*rest*.nii')
+                end % end if rest 
             end % end slice time correction
             %%-------------------------------%%
             if obj.coregisteration
@@ -80,12 +86,17 @@ classdef REST < Analysis.analysis_
 
         %%------ Slice time correction Matlab Batch -----%%
         function matlabbatch = get.slice_time_corrtemplate(obj)
+            disp('Creating slice time correction batch template...')
+            matlabbatch = obj.create_batch_slice_time_correction(obj.Data.rest);
+            disp('done!')
 
         end
 
         %%--------- Coregisteration Matlab Batch --------%%
         function matlabbatch = get.coregisterationtemplate(obj)
-
+            disp('Creating co-registeration batch template...')
+            matlabbatch = obj.create_batch_coregisteration;
+            disp('done!')
         end
         %%--------- Normalization Matlab Batch --------%%
         function matlabbatch = get.normalizationtemplate(obj)

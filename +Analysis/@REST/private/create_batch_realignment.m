@@ -1,6 +1,9 @@
 % -*- coding: 'UTF-8' -*-
-% Batch script for realignment
 function matlabbatch = create_batch_realignment(~)
+% Batch script for realignment
+% Author:
+% Behzad Iravani 
+% behzadiravani@gmail.com
 matlabbatch = {};
 
     matlabbatch{1}.spm.spatial.realign.estwrite.data{1} =cell(0,0); %#ok<*SAGROW>
