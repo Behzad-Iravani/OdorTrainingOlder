@@ -13,5 +13,6 @@ function run_coregistration(rest, T1, batch)
 %%----------------------------------------------------------%%
 %%--------------------- Coregister:EPI->T1 -----------------%%
 clc
-
+EPIs = spm_select('List',strcat(rest),'^a.*\.nii$');
+ 
 end

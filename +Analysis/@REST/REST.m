@@ -72,7 +72,7 @@ classdef REST < Analysis.analysis_
             %%-------------------------------%%
             if obj.coregisteration
                 disp('co-registeration...')
-                run_coregistration(obj.Data.rest, obj.Data.rest, obj.coregisterationtemplate)
+                run_coregistration(obj.Data.rest, obj.Data.T1, obj.coregisterationtemplate)
                 disp('done!')
             end % end coregisteration
         end % end method run 
