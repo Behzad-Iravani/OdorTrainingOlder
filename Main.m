@@ -26,7 +26,7 @@ analysis.name{2} = 'rest'; % Functional connectivity analysis of fMRI
 analysis.method.rest = Analysis.REST.empty(); % placeholder for REST method
 % Analysis object
 ANALYSIS = Analysis.analysis_(DATA, analysis);
-%% Running jobs
+%% Running preprocessing jobs
 job_counter = 0;
 for job = ANALYSIS.analysis.name
     job_counter = job_counter + 1;

@@ -75,11 +75,19 @@ classdef REST < Analysis.analysis_
                 run_coregistration(obj.Data.rest, obj.Data.T1, obj.coregisterationtemplate)
                 disp('done!')
             end % end coregisteration
+
+            if obj.normalization
+                disp('normalization...')
+                run_normalization(obj.normalizationtemplate)
+                disp('done!')
+            end
+            % cleam up
+            cleanUP(obj.Data.rest)
+            JobDone()
         end % end method run 
         %%-------------*********************-------------%%
         %%---------------------BATCH---------------------%%
         %%-------------*********************-------------%%
-        
         %%--------- Realignment Matlab Batch ------------%%
         function matlabbatch = get.Realignmenttemplate(obj)
             disp('Creating realignment batch template...')
@@ -94,7 +102,6 @@ classdef REST < Analysis.analysis_
             disp('done!')
 
         end
-
         %%--------- Coregisteration Matlab Batch --------%%
         function matlabbatch = get.coregisterationtemplate(obj)
             disp('Creating co-registeration batch template...')
@@ -103,7 +110,9 @@ classdef REST < Analysis.analysis_
         end
         %%--------- Normalization Matlab Batch --------%%
         function matlabbatch = get.normalizationtemplate(obj)
-
+            disp('Creating normalization batch template...')
+            matlabbatch = obj.create_batch_normalization(obj.Data.T1, obj.Data.rest);
+            disp('done!')
         end
 
     end % end methods
