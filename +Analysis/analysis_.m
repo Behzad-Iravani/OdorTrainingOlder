@@ -32,22 +32,25 @@ classdef analysis_ < Analysis.neurodata
                 error('No job is defined, please determined the job and try again!')
             else
                 switch job
+                    %'preprocessing'
                     case 'vbm'
                         % call vbm object
                         % setup preproc analysis for VBM
                         disp('Constructing VBM object')
                         answer_seg = input('Applying  segmentation, [y/n]? ','s');
-                        answer_DRTL = input('Applying  DARTEL normalization, [y/n]? ','s');
-                        if strcmp(answer_seg,'y') && strcmp(answer_DRTL, 'y')
-                            obj.analysis.method.vbm = Analysis.VBM(obj.Data, obj.BidsPath, obj.analysis, true, true);   
-                        elseif strcmp(answer_seg,'n') && strcmp(answer_DRTL, 'y')
-                            obj.analysis.method.vbm = Analysis.VBM(obj.Data, obj.BidsPath, obj.analysis, false, true);
-                        elseif strcmp(answer_seg,'y') && strcmp(answer_DRTL, 'n')
-                            obj.analysis.method.vbm = Analysis.VBM(obj.Data, obj.BidsPath, obj.analysis, true, false);
-                        else
-                            obj.analysis.method.vbm = Analysis.VBM(obj.Data, obj.BidsPath, obj.analysis, false, false);
-                        end
- 
+                        answer_DARTL = input('Applying  DARTEL normalization, [y/n]? ','s');
+                        answer_volume = input('Applying  volume normalization, [y/n]? ','s');
+                        answer_concentration = input('Applying  concentration normalization, [y/n]? ','s');
+                        
+                        translator = containers.Map({'y', 'n'}, [true , false]); % converts string to boolean
+
+                        obj.analysis.method.vbm = Analysis.VBM(obj.Data, obj.BidsPath, obj.analysis,...
+                            translator(answer_seg),...
+                            translator(answer_DARTL),...
+                            translator(answer_volume),...
+                            translator(answer_concentration));
+                 
+                    %%----------------------------------------------------%%
                     case 'rest'
                         % call rest object
                         % setup preproc analysis for REST
@@ -58,7 +61,7 @@ classdef analysis_ < Analysis.neurodata
                         answer_correg = input('Applying  coregistration, [y/n]? ','s');
                         answer_norm = input('Applying  normalization, [y/n]? ','s');
 
-                        translator = containers.Map({'y', 'n'}, [true , false]); % convert string to boolean
+                        translator = containers.Map({'y', 'n'}, [true , false]); % converts string to boolean
                         
                         obj.analysis.method.rest = Analysis.REST(...
                             obj.Data,...
@@ -69,6 +72,18 @@ classdef analysis_ < Analysis.neurodata
                             translator(answer_slicetc),...
                             translator(answer_correg),...
                             translator(answer_norm));
+                        %%----------------------------------------------------%%
+                    %%postprocessing 
+                    case 'postprocVBM'
+                         disp('Constructing POSTPROCVBM object')
+                         obj.analysis.method.postprocVBM = Analysis.POSTPROCVBM(...
+                             obj.Data,...
+                            obj.BidsPath,...
+                            obj.analysis);
+                        %%----------------------------------------------------%%
+                    case 'postprocREST'
+
+                        %%----------------------------------------------------%%
                 end
 
             end % end if nargin

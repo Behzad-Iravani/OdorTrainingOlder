@@ -8,7 +8,7 @@ classdef REST < Analysis.analysis_
     % This class is dependent on the following toolboxes:
     %     SPM 12
     %
-    % Stockholm, june 2019
+    % Stockholm, august 2018
     % revised december 2022
     properties
         realignment(1,1) logical % whether the realignment is performed (true) or not (false)
