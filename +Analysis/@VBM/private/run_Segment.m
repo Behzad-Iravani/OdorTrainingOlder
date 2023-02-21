@@ -1,6 +1,6 @@
 % -*- coding: 'UTF-8' -*-
 function run_Segment(path2T1,Batch)
-% This function is part of the VBM analysis using SPM 12 and perfoms
+% This function is part of the VBM analysis using SPM 12 and performs
 % segmentation
 %       Author: behzad iravani
 %       behzadiravani@gmail.com
@@ -16,7 +16,7 @@ for subs = 1:size(path2T1,1)
     msg = fprintf('subject #%d out of %d',subs,size(path2T1,1));
     file = dir(fullfile(path2T1{subs},'*.nii'));
     if isempty(file)
-        error(sprintf('mising file: %s',path2T1{subs}))
+        error(sprintf('missing file: %s',path2T1{subs}))
     end
     if(numel(file)>1)
         error(sprintf('more than one T1 scan is not allowed: %s\nThe analysis might have interputed before!',path2T1{subs}))

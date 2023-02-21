@@ -80,7 +80,7 @@ classdef neurodata < handle
         sub = dir(obj.BidsPath);
         sub(ismember({'.','..'}, {sub.name})) = [];
         fprintf('%d anat : subject folder(s) found.\n', numel(sub))
-        for s = 1:3%numel(sub)
+        for s = 1:numel(sub)
             t1{s,1} = fullfile(sub(s).folder, sub(s).name, 'anat');
         end
     end % get T1 scans end
@@ -89,7 +89,7 @@ classdef neurodata < handle
         sub = dir(obj.BidsPath);
         sub(ismember({'.','..'}, {sub.name})) = [];
         fprintf('%d rest : subject folder(s) found.\n', numel(sub))
-        for s = 1:3%numel(sub)
+        for s = 1:numel(sub)
             r{s,1} = fullfile(sub(s).folder, sub(s).name, 'func');
         end
     end % get rest scans end

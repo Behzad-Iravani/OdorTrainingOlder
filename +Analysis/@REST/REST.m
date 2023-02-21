@@ -13,6 +13,7 @@ classdef REST < Analysis.analysis_
     properties
         realignment(1,1) logical % whether the realignment is performed (true) or not (false)
         movement(1,1) logical % whether the movement correction is performed (true) or not (false)
+        art(1,1) logical % whether use conn for artifact detection(true) or not (false)
         slice_time_corr(1,1) logical% whether the slice time correction is performed (true) or not (false)
         coregisteration(1,1) logical% whether the coregisteration correctio is performed (true) or not (false)
         normalization(1,1) logical% whether the normalization is performed (true) or not (false)
@@ -25,7 +26,7 @@ classdef REST < Analysis.analysis_
     end
     methods
         %%-------- Constructor ------%%
-        function r = REST(Data, BidsPath, analysis, realignment, movement, ...
+        function r = REST(Data, BidsPath, analysis, realignment, movement, art, ...
                 slice_time_corr, coregisteration, normalization)
             if nargin>0
                 r.Data            = Data;
@@ -37,6 +38,7 @@ classdef REST < Analysis.analysis_
                 r.slice_time_corr = slice_time_corr;
                 r.coregisteration = coregisteration;
                 r.normalization   = normalization;
+                r.art             = art;
             end %end nargin 
         end % end constuctor 
         %%------------RUN REST preproc -----------%%
@@ -59,6 +61,7 @@ classdef REST < Analysis.analysis_
                 disp('done!')
             end % end movement
             %%-------------------------------%%
+            
             if obj.slice_time_corr
                disp('Slice time correction...')
                if isprop(obj.Data, 'rest') % check if the properties rest exists
@@ -79,6 +82,11 @@ classdef REST < Analysis.analysis_
             if obj.normalization
                 disp('normalization...')
                 run_normalization(obj.normalizationtemplate)
+                disp('done!')
+            end
+            if obj.art
+                disp('using conn for artifact detection')
+                obj.art_using_conn()
                 disp('done!')
             end
             % cleam up

@@ -15,12 +15,14 @@ classdef VBM < Analysis.analysis_
         DARTELnorm(1,1) logical % whether the DARTEL normalization is performed (true) or not (false)
         MNIVolume(1,1) logical % whether the volume normalizetion is performed (true) or not (false)
         MNIConcentration(1,1) logical % whether the concentration normalization is performed (true) or not (false)
+        template6
     end
     properties(Dependent)
         Segmentationtemplate(1,1) cell
         DARTELtemplate(1,1) cell
         MNIVolumetemplate(1,1) cell
         MNIConcentrationtemplate(1,1) cell
+       
     end
     methods
         %%-------- Constructor ------%%
@@ -34,10 +36,12 @@ classdef VBM < Analysis.analysis_
                 v.DARTELnorm = DARTELnorm;
                 v.MNIVolume  = MNIVolume;
                 v.MNIConcentration = MNIConcentration;
+                
             end
         end
         %%------------RUN VBM-----------%%
         function obj = run(obj)
+           
             if obj.segmentation
                 disp('Segmentation...')
                 if isprop(obj.Data, 'T1') % check if the properties T1 exists
@@ -55,8 +59,9 @@ classdef VBM < Analysis.analysis_
                 subjects = obj.Data.T1;
                 run_dartel_normalization(subjects,...
                     obj.DARTELtemplate);
-
+               
             end % end if DARTEL normalization
+             obj.template6 = cellstr(regexprep(spm_select(1, 'image', 'Select the DARTEL Template6'),',1',''));
             %//Normalization ----------------------
             if obj.MNIVolume
                 disp('Volume normalization,...')

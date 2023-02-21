@@ -9,8 +9,16 @@ function matlabbatch = create_batch_mni_norm(obj, preservence)
 % behzadiravani@gmail.com
 % Stockholm 2018
 
+% % persistent call template6
+% % if isempty(call)
+% %     call = 0;
+% %     template6 = cellstr(regexprep(spm_select(1, 'image', 'Select the DARTEL Template6'),',1',''));
+% % else
+% %     call = call + 1;
+% % end
+
 matlabbatch = {};
-matlabbatch{1}.spm.tools.dartel.mni_norm.template = cellstr(regexprep(spm_select(1, 'image', 'Select the DARTEL Template6'),',1',''));
+matlabbatch{1}.spm.tools.dartel.mni_norm.template = obj.template6;
 Subjects = obj.Data.T1;
 % % Subjects = regexprep(obj.Data.T1, 'Dataset', 'preproc\\VBM');
 % ---------------------------------------------
