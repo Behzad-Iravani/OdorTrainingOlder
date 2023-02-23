@@ -1,6 +1,6 @@
 % -*- coding: 'UTF-8' -*-
 classdef POSTPROCVBM< Analysis.analysis_
-    % POSTPROC class is part of odor transfer gain in older adults that 
+    % POSTPROC class is part of odor transfer gain in older adults that
     % takes care of all the post processing needed for generating the
     % results and figures for VBM
     % Author:
@@ -12,48 +12,140 @@ classdef POSTPROCVBM< Analysis.analysis_
     % Stockholm, june 2019
     % revised january 2023
     %%-----------------------------------------------------------%%
-    
-%     properties
-%         volumeflag(1,1) logical % whether the extracting volume is performed (true) or not (false)
-%     end
-
+    properties
+        group (1,1) double {mustBeNumeric(group), mustBeLessThan(group, 3), mustBeGreaterThan(group, 0), mustBeInteger(group)} = 1
+        list table
+        output
+        Indx_Pre = []
+        Indx_Pos = []
+    end
     properties(Dependent)
         totalvolume(1,1) stuct  % total cranial volume needed to be corrected in VBM
+        contrasttempalte
     end
-    
+
     methods
-        function obj = POSTPROCVBM(Data, BidsPath, analysis)
+        function obj = POSTPROCVBM(Data, BidsPath, analysis, list, group)
             % POSTPROC Construct an instance of this class
             if nargin>0
                 obj.Data            = Data;
                 obj.BidsPath        = BidsPath;
                 obj.analysis        = analysis;
-                           
-            end %end nargin 
-        end % end constuctor
-    
-        function obj = run(obj)
-          clc;
-          path_preproc = regexprep(obj.Data.T1, 'Dataset', 'preproc\\VBM');
-          for folder = 1:numel(path_preproc)
-            if exist(path_preproc{folder}, 'dir') 
-                disp('reading MRR log')
-                
-                T1_preproc = spm_select('list', path_preproc{folder}, '^smwc1.*\.nii$');
+                obj.list            = list;
+                obj.group           = group; % 1 olfactory training, 2 visual traning
 
-            else
-                warning('no preprocessed T1 folder: %s', path_preproc{folder})
+            end %end nargin
+        end % end constuctor
+
+        function obj = run(obj)
+            clc;
+            path_preproc = regexprep(obj.Data.T1, 'Dataset', 'preproc\\VBM');
+            for folder = 1:numel(path_preproc)
+                if exist(path_preproc{folder}, 'dir')
+                    disp('reading smwc1*.nii files: modulated gray matter volumes ... ')
+                    T1_preproc{folder,1} = spm_select('list', path_preproc{folder}, '^smwc1.*\.nii$');
+                else
+                    warning('no preprocessed T1 folder: %s', path_preproc{folder})
+                end
             end
-          end
-          dir()
+            disp('checking whether the contrast map exists...')
+            if ~exist('Derivatives\VBM', 'dir')
+                mkdir('Derivatives\VBM')
+                compute_contast = true;
+            else
+                folder = dir('Derivatives\VBM\');
+                if numel(folder)<=2 || ~exist('Derivatives\VBM\Olf', 'dir') || ~exist('Derivatives\VBM\Vis', 'dir')
+                    disp('No data,...')
+                    compute_contast = true;
+                elseif exist('Derivatives\VBM\Olf','dir')
+                    files = dir('Derivatives\VBM\Olf');
+                    files(ismember({files.name}, {'.', '..'})) = [];
+                    if numel(files) <= 20
+                    compute_contast = true;
+                    else
+                        compute_contast = false;
+                    end
+                   elseif exist('Derivatives\VBM\Vis','dir')
+                    files = dir('Derivatives\VBM\Vis');
+                    files(ismember({files.name}, {'.', '..'})) = [];
+                    if numel(files) <= 20
+                    compute_contast = true;
+                    else
+                        compute_contast = false;
+                    end
+                end
+            end
+
+            if compute_contast
+                disp('Creating contrast maps,...')
+                obj.Contrast()
+            else
+                load(['Derivatives\', sprintf('Contrast_g_%d.mat', obj.group)])
+            end
+            disp('running GLM with Conn toolbox...')
+%             DesignMatrix = [obj.totalvolume]
+
+
 
         end % end run
-    
-        function totalvolume = get.totalvolume(obj) 
-             disp('Estimating the total cranial volume...')
-             totalvolume = obj.estimate_total_volume();   
+        %&------------------ GET FUNCTIONS ------------------
+        function totalvolume = get.totalvolume(obj)
+            disp('Estimating the total cranial volume...')
+             estimate_total_volume(obj);
              disp('done!')
+%             totalvolume =
+
         end % end get total volume
-    end % methods      
+        %%-----------------------------------------------------
+        function matlabbatch = get.contrasttempalte(obj)
+            matlabbatch = create_batch_difference(obj);
+        end % contrast batch
+
+
+        function Contrast(obj)
+            % 1 is olfactory
+            % 2 is visual
+            list_ = obj.list;
+            list_.totalvoluem = obj.totalvolume;
+            DM = list_(list_.Group == obj.group,:);
+            %% --- Scans pre
+            obj.Indx_Pre = find(cellfun(@(x) strcmp(x,'T1'), DM.Timepoint));
+
+            %% --- Scans post
+            obj.Indx_Pos = find(cellfun(@(x) strcmp(x,'T2'), DM.Timepoint));
+
+            if length(obj.Indx_Pos)> length(obj.Indx_Pre)
+                rm = setdiff(DM.Subj(obj.Indx_Pos),DM.Subj(obj.Indx_Pre));
+                obj.Indx_Pos(arrayfun(@(x) find(DM.Subj(obj.Indx_Pos)==x),rm','UniformOutput',1)) = [];
+            end
+            if length(obj.Indx_Pos)<length(obj.Indx_Pre)
+                rm = setdiff(DM.Subj(obj.Indx_Pre),DM.Subj(obj.Indx_Pos));
+                obj.Indx_Pre(arrayfun(@(x) find(DM.Subj(obj.Indx_Pre)==x),rm','UniformOutput',1)) = [];
+            end
+            if obj.group == 1
+                if ~exist('Derivatives\VBM\Olf', 'dir')
+                    mkdir('Derivatives\VBM\olf')
+                end % if
+                obj.output = 'Derivatives\VBM\Olf';
+            elseif obj.group == 2
+                if ~exist('Derivatives\VBM\Vis', 'dir')
+                    mkdir('Derivatives\VBM\Vis')
+                end % if
+                obj.output = 'Derivatives\VBM\Vis';
+            else
+                error('illegal group identifier...')
+            end
+            run_contrast([obj.contrasttempalte()])
+
+            save(['Derivatives\', sprintf('Contrast_g_%d.mat', obj.group)], 'obj')
+
+        end % contrast
+
+    end % methods
+
+    methods(Static)
+
+
+    end % methods static
 end % POSTPROC
 

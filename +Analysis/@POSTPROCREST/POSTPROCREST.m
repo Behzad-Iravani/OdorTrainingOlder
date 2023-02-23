@@ -17,22 +17,25 @@ classdef POSTPROCREST< Analysis.analysis_
 %         volumeflag(1,1) logical % whether the extracting volume is performed (true) or not (false)
 %     end
 
-    properties(Dependent)
-        
+    properties 
+        Atlas
     end
     
     methods
-        function obj = POSTPROCREST(Data, BidsPath, analysis)
+        function obj = POSTPROCREST(Data, Atlas)
             % POSTPROC Construct an instance of this class
             if nargin>0
                 obj.Data            = Data;
-                obj.BidsPath        = BidsPath;
-                obj.analysis        = analysis;
+                obj.Atlas           = Atlas;
+            
+
+
                            
             end %end nargin 
         end % end constuctor
     
-        function obj = run(obj)
+        function obj = roi_extract_tcs(obj)
+            conn_module('preprocessing', 'steps',  'functional_roiextract')
 
 
         end % end run

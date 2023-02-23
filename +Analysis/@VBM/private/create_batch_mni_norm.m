@@ -20,13 +20,13 @@ function matlabbatch = create_batch_mni_norm(obj, preservence)
 matlabbatch = {};
 matlabbatch{1}.spm.tools.dartel.mni_norm.template = obj.template6;
 Subjects = obj.Data.T1;
-% % Subjects = regexprep(obj.Data.T1, 'Dataset', 'preproc\\VBM');
+Subjects = regexprep(obj.Data.T1, 'Dataset', 'preproc\\VBM');
 % ---------------------------------------------
 jj = 0;
 for isub = 1:numel(Subjects)
     
     FlowField = dir(strcat(Subjects{isub},'\u_rc1*.nii'));
-    Images    = dir(strcat(Subjects{isub},'\c1*.nii'));
+    Images    = dir(strcat(Subjects{isub},'\rc1*.nii'));
     if ~isempty(FlowField)
         jj = jj+1;
         matlabbatch{1}.spm.tools.dartel.mni_norm.data.subjs.flowfields(jj,:) =...
