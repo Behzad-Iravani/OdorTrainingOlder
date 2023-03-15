@@ -1,6 +1,6 @@
 % -*- coding: 'UTF-8' -*-
 function matlabbatch = create_batch_difference(obj)
-DM = obj.list(obj.list.Group == obj.group, :);
+DM = obj.list;
 
 
 for i=1:length(obj.Indx_Pre)

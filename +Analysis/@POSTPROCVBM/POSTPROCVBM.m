@@ -1,5 +1,5 @@
 % -*- coding: 'UTF-8' -*-
-classdef POSTPROCVBM< Analysis.analysis_
+classdef POSTPROCVBM < Analysis.analysis_
     % POSTPROC class is part of odor transfer gain in older adults that
     % takes care of all the post processing needed for generating the
     % results and figures for VBM
@@ -82,19 +82,13 @@ classdef POSTPROCVBM< Analysis.analysis_
             else
                 load(['Derivatives\', sprintf('Contrast_g_%d.mat', obj.group)])
             end
-            disp('running GLM with Conn toolbox...')
-%             DesignMatrix = [obj.totalvolume]
-
-
-
+           
         end % end run
         %&------------------ GET FUNCTIONS ------------------
         function totalvolume = get.totalvolume(obj)
             disp('Estimating the total cranial volume...')
-             estimate_total_volume(obj);
+            totalvolume = estimate_total_volume(obj);
              disp('done!')
-%             totalvolume =
-
         end % end get total volume
         %%-----------------------------------------------------
         function matlabbatch = get.contrasttempalte(obj)
@@ -105,14 +99,14 @@ classdef POSTPROCVBM< Analysis.analysis_
         function Contrast(obj)
             % 1 is olfactory
             % 2 is visual
-            list_ = obj.list;
-            list_.totalvoluem = obj.totalvolume;
-            DM = list_(list_.Group == obj.group,:);
+            DM = obj.list;
+            obj.list = cat(2,DM, list_x_volume(DM, obj.totalvolume));
+            
             %% --- Scans pre
-            obj.Indx_Pre = find(cellfun(@(x) strcmp(x,'T1'), DM.Timepoint));
+            obj.Indx_Pre = find(cellfun(@(x) strcmp(x,'T1'), DM.Timepoint) & DM.Group == obj.group);
 
             %% --- Scans post
-            obj.Indx_Pos = find(cellfun(@(x) strcmp(x,'T2'), DM.Timepoint));
+            obj.Indx_Pos = find(cellfun(@(x) strcmp(x,'T2'), DM.Timepoint) & DM.Group == obj.group);
 
             if length(obj.Indx_Pos)> length(obj.Indx_Pre)
                 rm = setdiff(DM.Subj(obj.Indx_Pos),DM.Subj(obj.Indx_Pre));
@@ -136,16 +130,35 @@ classdef POSTPROCVBM< Analysis.analysis_
                 error('illegal group identifier...')
             end
             run_contrast([obj.contrasttempalte()])
-
-            save(['Derivatives\', sprintf('Contrast_g_%d.mat', obj.group)], 'obj')
+            file = struct(obj);
+            save(['Derivatives\', sprintf('Contrast_g_%d.mat', obj.group)],"file")
+            clear file
 
         end % contrast
 
     end % methods
 
-    methods(Static)
-
-
-    end % methods static
+% % %     methods(Static)
+% % %         function json = write_json(x)
+% % %             j = struct();
+% % %             fields = fieldnames(x);
+% % %             c=0;
+% % %            for f = fields'
+% % %                c=c+1;
+% % %                j.type = f{:}
+% % %                x.(f{:})  = {x.(f{:})};
+% % %                index(c)  = isempty(x.(f{:}));
+% % %                if istable(x.(f{:}))
+% % %                    x.(f{:}) =  table2cell(x.(f{:}));
+% % %                elseif isobject(x.(f{:}))
+% % %                    index(c)  = true;
+% % %                end
+% % %            end
+% % %            x = rmfield(x, fields(index));
+% % %            g.g = "text"
+% % %            json = jsondecode(g);
+           
+% % %         end
+% % %     end % methods static
 end % POSTPROC
 

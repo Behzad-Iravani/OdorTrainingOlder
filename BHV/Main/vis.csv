@@ -1,0 +1,17 @@
+Subj,Group,Age,Gender,aOdorMeM,bOdorMeM,aVisMeM,bVisMeM,TrainGain,TransferGrain,aCogn,bCogn,CognGain,aThresh,bThresh,ThreshGain,aDisc,bDisc,DiscGain,aID,bID,IDGain,aT1,aRest,bT1,bRest
+7,vis,70,F,42,56,46,21,25,-14,111,113,2,6,5,-1,11,14,3,11,12,1,C:\Projects\Git\Dataset\7697\anat,C:\Projects\Git\Dataset\7697\func,C:\Projects\Git\Dataset\7806\anat,C:\Projects\Git\Dataset\7806\func
+8,vis,79,F,43,29,48,21,27,14,110,118,8,3,7,4,11,9,-2,10,16,6,C:\Projects\Git\Dataset\7696\anat,C:\Projects\Git\Dataset\7696\func,C:\Projects\Git\Dataset\7807\anat,C:\Projects\Git\Dataset\7807\func
+10,vis,73,M,57,72,32,21,11,-15,123,130,7,5,1,-4,13,10,-3,14,8,-6,C:\Projects\Git\Dataset\7869\anat,C:\Projects\Git\Dataset\7869\func,C:\Projects\Git\Dataset\8118\anat,C:\Projects\Git\Dataset\8118\func
+11,vis,71,M,53,37,61,20,41,16,124,125,1,7,6,-1,8,8,0,9,10,1,C:\Projects\Git\Dataset\7814\anat,C:\Projects\Git\Dataset\7814\func,C:\Projects\Git\Dataset\7997\anat,C:\Projects\Git\Dataset\7997\func
+13,vis,73,M,61,52,30,23,7,9,130,135,5,5,2,-3,10,5,-5,10,7,-3,C:\Projects\Git\Dataset\7961\anat,C:\Projects\Git\Dataset\7961\func,C:\Projects\Git\Dataset\8158\anat,C:\Projects\Git\Dataset\8158\func
+18,vis,71,M,44,60,50,56,-6,-16,92,105,13,3,3,0,8,9,1,14,10,-4,C:\Projects\Git\Dataset\8242\anat,C:\Projects\Git\Dataset\8242\func,C:\Projects\Git\Dataset\8487\anat,C:\Projects\Git\Dataset\8487\func
+20,vis,67,M,55,53,44,28,16,2,119,128,9,2,5,3,13,11,-2,12,12,0,C:\Projects\Git\Dataset\8432\anat,C:\Projects\Git\Dataset\8432\func,C:\Projects\Git\Dataset\8581\anat,C:\Projects\Git\Dataset\8581\func
+23,vis,71,M,66,31,49,41,8,35,106,110,4,0,1,1,8,12,4,5,7,2,C:\Projects\Git\Dataset\8625\anat,C:\Projects\Git\Dataset\8625\func,C:\Projects\Git\Dataset\8713\anat,C:\Projects\Git\Dataset\8713\func
+26,vis,72,F,53,28,74,27,47,25,107,107,0,7,7,0,12,13,1,14,12,-2,C:\Projects\Git\Dataset\8779\anat,C:\Projects\Git\Dataset\8779\func,C:\Projects\Git\Dataset\8999\anat,C:\Projects\Git\Dataset\8999\func
+30,vis,80,F,70,75,52,32,20,-5,111,122,11,10,5,-5,12,10,-2,11,7,-4,C:\Projects\Git\Dataset\8884\anat,C:\Projects\Git\Dataset\8884\func,C:\Projects\Git\Dataset\9102\anat,C:\Projects\Git\Dataset\9102\func
+31,vis,71,F,43,44,31,28,3,-1,119,116,-3,7,3,-4,14,12,-2,12,12,0,C:\Projects\Git\Dataset\8963\anat,C:\Projects\Git\Dataset\8963\func,C:\Projects\Git\Dataset\9179\anat,C:\Projects\Git\Dataset\9179\func
+35,vis,75,F,42,61,47,26,21,-19,123,125,2,6,4,-2,9,13,4,12,11,-1,C:\Projects\Git\Dataset\9297\anat,C:\Projects\Git\Dataset\9297\func,C:\Projects\Git\Dataset\9473\anat,C:\Projects\Git\Dataset\9473\func
+37,vis,66,F,29,30,31,20,11,-1,125,122,-3,5,5,0,13,11,-2,10,9,-1,C:\Projects\Git\Dataset\9413\anat,C:\Projects\Git\Dataset\9413\func,C:\Projects\Git\Dataset\9625\anat,C:\Projects\Git\Dataset\9625\func
+40,vis,65,F,30,65,46,23,23,-35,118,130,12,7,7,0,13,15,2,13,13,0,C:\Projects\Git\Dataset\9414\anat,C:\Projects\Git\Dataset\9414\func,C:\Projects\Git\Dataset\9601\anat,C:\Projects\Git\Dataset\9601\func
+50,vis,73,F,71,74,79,19,60,-3,126,125,-1,3,2,-1,9,10,1,6,12,6,C:\Projects\Git\Dataset\9699\anat,C:\Projects\Git\Dataset\9699\func,C:\Projects\Git\Dataset\9881\anat,C:\Projects\Git\Dataset\9881\func
+55,vis,68,F,42,68,85,19,66,-26,112,104,-8,0,2,2,10,14,4,10,7,-3,C:\Projects\Git\Dataset\10037\anat,C:\Projects\Git\Dataset\10037\func,C:\Projects\Git\Dataset\10170\anat,C:\Projects\Git\Dataset\10170\func
